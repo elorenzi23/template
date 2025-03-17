@@ -5,3 +5,9 @@ alembic
 psycopg2
 sqlalchemy
 python-dotenv
+black
+ruff
+flake8
+mypy
+isort
+

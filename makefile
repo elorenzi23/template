@@ -46,3 +46,14 @@ clean-docker:
 .PHONY: install-and-build
 install-and-build: venv install build-docker
 
+lint:
+	black .
+	ruff check . --fix
+	flake8 . --exclude=venv
+	isort .
+
+#keeping mypy checks separate for now
+typecheck:
+	mypy .
+
+
