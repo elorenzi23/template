@@ -9,8 +9,8 @@ DOCKER_IMAGE = myproject_image
 venv:
 	# Create virtual environment if it doesn't exist
 	python3 -m venv $(VENV_NAME)
-	# Install dependencies from requirements.txt
-	$(VENV_NAME)/bin/pip install -r requirements.txt
+	$(VENV_NAME)/bin/pip install --upgrade pip
+	$(VENV_NAME)/bin/pip install -r requirements-dev.txt
 
 # Build Docker image
 .PHONY: build-docker
@@ -22,7 +22,7 @@ build-docker:
 .PHONY: install
 install:
 	# Install dependencies inside the virtual environment
-	$(VENV_NAME)/bin/pip install -r requirements.txt
+	$(VENV_NAME)/bin/pip install -r requirements-dev.txt
 
 # Run application with Docker
 .PHONY: run-docker
@@ -45,6 +45,9 @@ clean-docker:
 # Install the requirements and then build the Docker image
 .PHONY: install-and-build
 install-and-build: venv install build-docker
+
+test:
+	pytest --cov=app tests/
 
 lint:
 	black .

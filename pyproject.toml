@@ -20,6 +20,11 @@ strict = true  # Enforce type checking
 max-line-length = 80
 extend-ignore = ["E501"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=app --cov-report=term-missing -v"
+asyncio_mode = "auto"
+
 name = "template_project"
 version = "0.1.0"
 description = "A short description of the project"
