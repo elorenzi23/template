@@ -37,6 +37,33 @@ jobs:
           . venv/bin/activate
           pytest
 
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up test database environment
+        run: echo "DATABASE_URL=sqlite:///test.db" >> $GITHUB_ENV
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          . venv/bin/activate
+          pip install -r requirements-dev.txt
+
+      - name: Run tests with pytest
+        run: |
+          . venv/bin/activate
+          make lint
+
+
   docker:
     runs-on: ubuntu-latest
     needs: test  # Ensures tests run before building Docker
